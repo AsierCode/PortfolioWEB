@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Se importa la fuente Poppins desde Google Fonts para un diseño más moderno y legible -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <title>Reloj</title>
+    
+  </head>
+  <body>
+    <!-- Inspiración del diseño del reloj: https://dribbble.com/shots/5958443-Alarm-clock -->
+
+    <!-- Botón para cambiar entre modo oscuro y claro -->
+    <button class="toggle">Dark mode</button>
+
+    <!-- Contenedor principal del reloj y la información de fecha y hora -->
+    <div class="clock-container">
+      
+      <!-- Reloj con agujas -->
+      <div class="clock">
+        <!-- Aguja de la hora -->
+        <div class="needle hour"></div>
+        <!-- Aguja del minuto -->
+        <div class="needle minute"></div>
+        <!-- Aguja del segundo -->
+        <div class="needle second"></div>
+        <!-- Punto central del reloj -->
+        <div class="center-point"></div>
+      </div>
+
+      <!-- Sección para mostrar la hora actual -->
+      <div class="time"></div>
+      <!-- Sección para mostrar la fecha actual -->
+      <div class="date"></div>
+    </div>
+
+    <!-- Vincula el archivo JavaScript que contiene la lógica del reloj -->
+    <script src="script.js"></script>
+  </body>
+</html>
