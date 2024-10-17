@@ -8,4 +8,4 @@
 ## 2. Juegos educativos / School games
 
 - [Files](https://github.com/AsierCode/PortfolioWEB/tree/master/JuegosEducativos)  
-- [Web](https://asiercode.github.io/PortfolioWEB/JuegosEducativos/index.html)
+- [Web](https://asiercode.github.io/PortfolioWEB/JuegosEducativos/Menu.html)
