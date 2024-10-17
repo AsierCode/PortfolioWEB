@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Juego de Operaciones Combinadas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        #empezar {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #empezar:hover {
+            background-color: #1e40af;
+            transform: scale(1.1);
+        }
+
+        #empezar:active {
+            background-color: #1c3d5a;
+            transform: scale(1);
+        }
+
+        .titulo-caja {
+            background-color: #fbbf24;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #empezar {
+            padding: 16px 32px;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            width: 80%;
+        }
+    </style>
+</head>
+
+<body class="bg-yellow-100 flex flex-col items-center justify-center min-h-screen">
+    <div id="juego" class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full hidden">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-4">¡Juego de Operaciones Combinadas!</h1>
+
+        <div id="pregunta" class="text-2xl font-semibold mb-6 text-center"></div>
+
+        <input id="respuesta" type="number" class="border p-3 w-full rounded mb-4 text-center text-2xl"
+            placeholder="Tu respuesta">
+
+        <button id="comprobar"
+            class="w-full bg-green-500 text-white p-3 rounded hover:bg-green-600 text-xl">Comprobar</button>
+
+        <div id="mensaje" class="text-center text-lg mt-4"></div>
+
+        <div id="resultado" class="text-center mt-6">
+            <p id="aciertos" class="font-semibold text-green-600 text-xl">Aciertos: 0</p>
+            <p id="fallos" class="font-semibold text-red-600 text-xl">Fallos: 0</p>
+            <p id="puntuacion" class="font-bold text-2xl text-blue-600 mt-4">Puntuación: 0</p>
+        </div>
+
+        <div id="contador" class="text-center text-2xl font-bold text-red-600 mt-4">Tiempo: 10s</div>
+    </div>
+
+    <div id="fin" class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full hidden">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-4">¡Juego Terminado!</h1>
+        <p id="mensajeFinal" class="text-xl text-center mb-4"></p>
+        <p id="detallesFinales" class="text-lg text-center mb-4"></p>
+        <button id="reiniciar" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-600 text-xl">Reiniciar
+            Juego</button>
+    </div>
+
+    <div class="titulo-caja flex flex-col items-center" id="inicio">
+        <h1 class="text-4xl font-bold text-center text-blue-600 mb-6">¡Juego de Operaciones Combinadas!</h1>
+        <button id="empezar"
+            class="border-4 border-blue-500 text-blue-500 p-6 rounded-lg hover:bg-blue-500 hover:text-white text-xl">Empezar
+            Juego</button>
+    </div>
+
+    <!-- Botón de vuelta al menú -->
+    <div class="text-center mt-6">
+        <a href="menu.html" class="bg-gray-500 text-white p-4 rounded-lg hover:bg-gray-600 text-lg">
+            Volver al Menú
+        </a>
+    </div>
+
+    <!-- Botones de GitHub, LinkedIn y Web Personal -->
+    <div class="flex justify-center gap-6 mt-6 pt-4">
+        <!-- GitHub -->
+        <a href="https://github.com/AsierCode?tab=repositories" target="_blank"
+            class="bg-gray-900 text-white p-4 rounded-lg hover:bg-gray-800 flex items-center justify-center">
+            <i class="fab fa-github text-3xl"></i>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/asier-nuñez-garcia/" target="_blank"
+            class="bg-blue-700 text-white p-4 rounded-lg hover:bg-blue-600 flex items-center justify-center">
+            <i class="fab fa-linkedin text-3xl"></i>
+        </a>
+
+        <!-- Web Personal -->
+        <a href="https://www.asierweb.com" target="_blank"
+            class="bg-green-500 text-white p-4 rounded-lg hover:bg-green-600 flex items-center justify-center">
+            <i class="fas fa-globe text-3xl"></i>
+        </a>
+    </div>
+
+    <script>
+        let aciertos = 0;
+        let fallos = 0;
+        let puntuacion = 0;
+        let preguntasHechas = 0;
+        let preguntas = [];
+        let temporizador;
+        let tiempoRestante = 10;
+        let contador = 0;  // Contador oculto que suma aciertos y fallos
+        let ultimoMensaje = "";
+
+        const generarPregunta = () => {
+            const num1 = Math.floor(Math.random() * 100) + 1;
+            const num2 = Math.floor(Math.random() * 100) + 1;
+            const operadores = ["+", "-", "*", "/"];
+            const operador = operadores[Math.floor(Math.random() * operadores.length)];
+
+            let pregunta;
+            let respuestaCorrecta;
+
+            switch (operador) {
+                case "+":
+                    pregunta = `${num1} + ${num2}`;
+                    respuestaCorrecta = num1 + num2;
+                    break;
+                case "-":
+                    pregunta = `${num1} - ${num2}`;
+                    respuestaCorrecta = num1 - num2;
+                    break;
+                case "*":
+                    pregunta = `${num1} * ${num2}`;
+                    respuestaCorrecta = num1 * num2;
+                    break;
+                case "/":
+                    pregunta = `${num1 * num2} / ${num1}`;  // Asegurar una división exacta
+                    respuestaCorrecta = num2;
+                    break;
+            }
+
+            return { pregunta, respuestaCorrecta };
+        };
+
+        const actualizarContador = () => {
+            document.getElementById('aciertos').textContent = `Aciertos: ${aciertos}`;
+            document.getElementById('fallos').textContent = `Fallos: ${fallos}`;
+            document.getElementById('puntuacion').textContent = `Puntuación: ${puntuacion}`;
+        };
+
+        const mostrarPregunta = () => {
+            if (preguntasHechas < 10 && contador < 10) {
+                let nuevaPregunta = generarPregunta();
+
+                // Evitar preguntas repetidas
+                while (preguntas.includes(nuevaPregunta.pregunta)) {
+                    nuevaPregunta = generarPregunta();
+                }
+
+                preguntas.push(nuevaPregunta.pregunta);
+                document.getElementById('pregunta').textContent = nuevaPregunta.pregunta;
+                document.getElementById('pregunta').classList.add('text-center');
+                document.getElementById('comprobar').onclick = () => comprobarRespuesta(nuevaPregunta.respuestaCorrecta);
+
+                // Restablecer tiempo
+                tiempoRestante = 10;
+                document.getElementById('contador').textContent = `Tiempo: ${tiempoRestante}s`;
+
+                clearInterval(temporizador);
+                temporizador = setInterval(() => {
+                    tiempoRestante--;
+                    document.getElementById('contador').textContent = `Tiempo: ${tiempoRestante}s`;
+                    if (tiempoRestante <= 0) {
+                        clearInterval(temporizador);
+                        fallos++;
+                        contador++;  // Aumentar el contador por fallo
+                        actualizarContador();
+                        mostrarPregunta();
+                    }
+                }, 1000);
+            } else {
+                finalizarJuego();
+            }
+        };
+
+        const comprobarRespuesta = (respuestaCorrecta) => {
+            const respuestaUsuario = document.getElementById('respuesta').value;
+
+            if (parseInt(respuestaUsuario) === respuestaCorrecta) {
+                document.getElementById('mensaje').textContent = "¡Correcto!";
+                document.getElementById('mensaje').classList.remove('text-red-600');
+                document.getElementById('mensaje').classList.add('text-green-600');
+                aciertos++;
+                puntuacion += 100; // Solo sumamos puntos por respuestas correctas
+                ultimoMensaje = "¡Correcto!";
+            } else {
+                document.getElementById('mensaje').textContent = `Incorrecto. La respuesta correcta es: ${respuestaCorrecta}`;
+                document.getElementById('mensaje').classList.remove('text-green-600');
+                document.getElementById('mensaje').classList.add('text-red-600');
+                fallos++;
+                ultimoMensaje = `Incorrecto. La respuesta correcta es: ${respuestaCorrecta}`;
+            }
+
+            contador++;  // Aumentar el contador por acierto o fallo
+            actualizarContador();
+            document.getElementById('respuesta').value = ""; // Vaciar la caja de texto
+            setTimeout(mostrarPregunta, 100); // Mostrar siguiente pregunta inmediatamente
+        };
+
+        const finalizarJuego = () => {
+            clearInterval(temporizador);
+            document.getElementById('juego').classList.add('hidden');
+            document.getElementById('fin').classList.remove('hidden');
+
+            const mensajeFinal = "¡Juego Terminado!";
+            document.getElementById('mensajeFinal').textContent = mensajeFinal;
+            document.getElementById('detallesFinales').textContent = `Aciertos: ${aciertos}, Fallos: ${fallos}, Puntuación Final: ${puntuacion}`;
+        };
+
+        const reiniciarJuego = () => {
+            aciertos = 0;
+            fallos = 0;
+            puntuacion = 0;
+            preguntasHechas = 0;
+            preguntas = [];
+            contador =
+                contador = 0;
+            tiempoRestante = 10;
+
+            // Ocultar pantalla de fin y mostrar juego
+            document.getElementById('fin').classList.add('hidden');
+            document.getElementById('juego').classList.remove('hidden');
+
+            // Restablecer visualización
+            actualizarContador();
+            document.getElementById('mensaje').textContent = "";
+            document.getElementById('contador').textContent = `Tiempo: ${tiempoRestante}s`;
+
+            // Reiniciar el botón de inicio
+            document.getElementById('inicio').classList.add('hidden');
+            document.getElementById('juego').classList.remove('hidden');
+
+            // Mostrar primera pregunta
+            mostrarPregunta();
+        };
+
+        document.getElementById('empezar').onclick = () => {
+            document.getElementById('inicio').classList.add('hidden');
+            document.getElementById('juego').classList.remove('hidden');
+            mostrarPregunta();
+        };
+
+        // Reiniciar el juego
+        document.getElementById('reiniciar').onclick = reiniciarJuego;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>¡Juegos Matemáticos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .titulo-caja {
+            background-color: #fbbf24;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #empezar {
+            padding: 16px 32px;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            width: 80%;
+        }
+
+        #empezar:hover {
+            background-color: #1e40af;
+            transform: scale(1.1);
+        }
+
+        #empezar:active {
+            background-color: #1c3d5a;
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body class="bg-yellow-100 flex flex-col items-center justify-center min-h-screen">
+    <div class="titulo-caja flex flex-col items-center">
+        <h1 class="text-4xl font-bold text-center text-blue-600 mb-6">¡Juegos Matemáticos!</h1>
+
+        <div class="mb-6">
+            <p class="text-xl mb-4">Elige el juego que quieras jugar:</p>
+            <a href="juego_sumas_restas.html"
+                class="w-full bg-green-500 text-white p-6 rounded-lg hover:bg-green-600 text-xl mb-4 block text-center">Suma
+                y Resta</a>
+            <a href="juego_multiplicaciones.html"
+                class="w-full bg-orange-500 text-white p-6 rounded-lg hover:bg-yellow-600 text-xl mb-4 block text-center">Multiplicaciones</a>
+            <a href="juego_divisiones.html"
+                class="w-full bg-blue-500 text-white p-6 rounded-lg hover:bg-blue-600 text-xl mb-4 block text-center">Divisiones</a>
+            <a href="juego_combinado.html"
+                class="w-full bg-purple-500 text-white p-6 rounded-lg hover:bg-purple-600 text-xl block text-center">Suma,
+                Resta, Multiplicación y División</a>
+        </div>
+
+        <div>
+            <p class="text-lg">Elige tu juego y comienza a aprender divirtiéndote.</p>
+        </div>
+    </div>
+    <!-- Botones de GitHub, LinkedIn y Web Personal -->
+    <div class="flex justify-center gap-6 mt-6">
+        <!-- GitHub -->
+        <a href="https://github.com/AsierCode?tab=repositories" target="_blank"
+            class="bg-gray-900 text-white p-4 rounded-lg hover:bg-gray-800 flex items-center justify-center">
+            <i class="fab fa-github text-3xl"></i>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/asier-nuñez-garcia/" target="_blank"
+            class="bg-blue-700 text-white p-4 rounded-lg hover:bg-blue-600 flex items-center justify-center">
+            <i class="fab fa-linkedin text-3xl"></i>
+        </a>
+
+        <!-- Web Personal -->
+        <a href="https://www.asierweb.com" target="_blank"
+            class="bg-green-500 text-white p-4 rounded-lg hover:bg-green-600 flex items-center justify-center">
+            <i class="fas fa-globe text-3xl"></i>
+        </a>
+    </div>
+
+</body>
+
+</html>
